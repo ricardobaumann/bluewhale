@@ -76,6 +76,9 @@ local [swagger docs](http://localhost:8080/swagger-ui/index.html).
 All the endpoints are protected, except for the login endpoint. Use this one to get a token for a username, and then set
 the token on swagger via ![authorize.png](authorize.png) button.
 
+You can also watch my presentation about the
+API [here](https://www.loom.com/share/7073a5ac225746c68abce7f22ec3f4cf?sid=f761451f-ea58-4660-9efe-feabf67442fe).
+
 ### Production setup
 
 * Database: A proper and fine-tuned PostgreSQL instance need to be created, and linked to the service. I recommend [AWS
