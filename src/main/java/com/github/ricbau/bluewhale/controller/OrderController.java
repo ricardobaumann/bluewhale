@@ -7,6 +7,7 @@ import com.github.ricbau.bluewhale.output.ResourceRef;
 import com.github.ricbau.bluewhale.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
+    @Cacheable(key = "#id", cacheNames = "orders")
     public ResponseEntity<OrderOutput> get(@PathVariable UUID id) {
         return orderService.findInDept(id)
                 .map(orderMapper::map)
