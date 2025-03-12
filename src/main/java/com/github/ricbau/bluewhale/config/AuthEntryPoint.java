@@ -1,7 +1,6 @@
 package com.github.ricbau.bluewhale.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -22,15 +21,13 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException {
-        log.error("Unauthorized error: {}", authException.getMessage());
+        log.error("Unauthorized: {}", authException.getMessage());
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         objectMapper.writeValue(response.getOutputStream(), Map.of(
                 "status", HttpServletResponse.SC_UNAUTHORIZED,
-                "error", "Unauthorized",
-                "message", authException.getMessage(),
                 "path", request.getServletPath()
         ));
     }

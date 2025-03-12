@@ -13,8 +13,8 @@ class JwtRepoTest {
     private JwtRepo jwtRepo;
 
     @Test
-    void shouldGenerateAndValidateToken() {
-        jwtRepo.validate(jwtRepo.generateToken("foo"));
+    void shouldGenerateAndParseToken() {
+        jwtRepo.parse(jwtRepo.generateToken("foo"));
     }
 
 }

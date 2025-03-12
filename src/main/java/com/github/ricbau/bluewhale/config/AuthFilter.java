@@ -29,7 +29,7 @@ public class AuthFilter extends OncePerRequestFilter {
         Optional.ofNullable(request.getHeader("Authorization"))
                 .filter(authorization -> authorization.startsWith("Bearer "))
                 .map(bearer -> bearer.substring(7))
-                .map(jwtRepo::validate)
+                .map(jwtRepo::parse)
                 .map(Jwt::getPayload)
                 .map(Claims::getSubject)
                 .map(JwtUserDetails::new)

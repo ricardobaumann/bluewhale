@@ -25,7 +25,7 @@ public class JwtRepo {
                 .compact();
     }
 
-    public Jws<Claims> validate(String token) {
+    public Jws<Claims> parse(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()

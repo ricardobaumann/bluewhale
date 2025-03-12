@@ -26,7 +26,7 @@ public class SecurityConfig {
                                                    AuthFilter authFilter) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/v1/login", "/error")
+                .authorizeHttpRequests(req -> req.requestMatchers("/v1/login", "/error", "/swagger-ui/**", "/v3/api-docs/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

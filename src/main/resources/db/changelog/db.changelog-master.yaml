@@ -4,7 +4,7 @@ databaseChangeLog:
       author: "ribaumann"
       changes:
         - createTable:
-            tableName: "test"
+            tableName: "products"
             columns:
               - column:
                   name: "id"
@@ -14,3 +14,70 @@ databaseChangeLog:
               - column:
                   name: "name"
                   type: "text"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: "unit_price"
+                  type: "decimal(13,3)"
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: "orders"
+            columns:
+              - column:
+                  name: "id"
+                  type: "uuid"
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: "created_by"
+                  type: "text"
+              - column:
+                  name: "modified_by"
+                  type: "text"
+              - column:
+                  name: "created_at"
+                  type: "datetime"
+              - column:
+                  name: "modified_at"
+                  type: "datetime"
+        - createTable:
+            tableName: "order_items"
+            columns:
+              - column:
+                  name: "id"
+                  type: "uuid"
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: "product_id"
+                  type: "uuid"
+                  constraints:
+                    foreignKeyName: "fk_item_product"
+                    references: "products(id)"
+                    nullable: false
+              - column:
+                  name: "order_id"
+                  type: "uuid"
+                  constraints:
+                    foreignKeyName: "fk_item_order"
+                    references: "orders(id)"
+                    nullable: false
+              - column:
+                  name: "amount"
+                  type: "decimal(13,3)"
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: "idx_item_product"
+            tableName: "order_items"
+            columns:
+              - column:
+                  name: product_id
+        - createIndex:
+            indexName: "idx_item_order"
+            tableName: "order_items"
+            columns:
+              - column:
+                  name: order_id
+

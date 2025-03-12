@@ -22,6 +22,4 @@ public class LoginController {
     public LoginToken login(@RequestBody @NotNull @Valid LoginCredentials loginCredentials) {
         return loginService.login(loginCredentials);
     }
-
-
 }
