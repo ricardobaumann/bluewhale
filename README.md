@@ -83,7 +83,8 @@ the token on swagger via ![authorize.png](authorize.png) button.
 * Cache: The default settings are including an in-memory cache mechanism. It suffices for local development, but for
   production I recommend https://redis.io/ or https://memcached.org/. Both solutions can be easily integrated with the
   Spring Boot Cache abstraction.
-* Security: The default settings are including a simple and embedded JWT token generation and authorization. That can
+* Security: The default settings are including a simple and embedded JWT token generation and authorization. By adding a
+  proper login with username+password, that can
   suffice for a while, but as soon as we have more services that require authorization, more sophisticated solutions
   will be required. I recommend [AWS Cognito](https://aws.amazon.com/pt/cognito/)
   and [Keycloak](https://www.keycloak.org/) on the longer run.
