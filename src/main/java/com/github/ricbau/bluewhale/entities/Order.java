@@ -1,9 +1,6 @@
 package com.github.ricbau.bluewhale.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -28,6 +25,9 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     //For future reuse, the below attributes can be added to an @Embedded JPA entity
     @CreatedBy

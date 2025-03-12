@@ -1,0 +1,13 @@
+services:
+  bluewhale:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Postgres2022!"
+    ports:
+      - "5432:5432"

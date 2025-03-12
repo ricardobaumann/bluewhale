@@ -45,6 +45,7 @@ class OrderControllerGetE2ETest {
                         .header("Authorization", "Bearer " + jwtRepo.generateToken("user")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(id.toString())))
+                .andExpect(jsonPath("$.status", is("OPEN")))
 
                 .andExpect(jsonPath("$.items[0].productId", notNullValue()))
                 .andExpect(jsonPath("$.items[0].productName", is("foo")))

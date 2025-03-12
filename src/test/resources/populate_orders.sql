@@ -5,7 +5,7 @@ delete from orders;
 insert into products values (gen_random_uuid(),'foo', 10);
 insert into products values (gen_random_uuid(),'bar', 5);
 
-insert into orders (id) values (gen_random_uuid());
+insert into orders (id, status) values (gen_random_uuid(), 'OPEN');
 
 insert into order_items (id, order_id, product_id, amount)
 values (

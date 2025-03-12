@@ -1,6 +1,7 @@
 package com.github.ricbau.bluewhale.service;
 
 import com.github.ricbau.bluewhale.entities.Order;
+import com.github.ricbau.bluewhale.entities.OrderStatus;
 import com.github.ricbau.bluewhale.input.OrderInput;
 import com.github.ricbau.bluewhale.repos.OrderRepo;
 import jakarta.transaction.Transactional;
@@ -21,6 +22,7 @@ public class OrderService {
 
         Order order = orderRepo.save(Order.builder()
                 .id(UUID.randomUUID())
+                .status(OrderStatus.OPEN)
                 .build());
 
         orderInput.items()
