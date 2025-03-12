@@ -26,7 +26,7 @@ public class Order {
     @Id
     private UUID id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
     //For future reuse, the below attributes can be added to an @Embedded JPA entity

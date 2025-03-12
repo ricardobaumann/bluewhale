@@ -16,9 +16,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,9 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest
-@Transactional
 @AutoConfigureMockMvc
-class OrderControllerTest {
+@Transactional
+@Sql(statements = {"delete from order_items", "delete from orders", "delete from products"})
+class OrderControllerCreateE2ETest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -62,6 +66,7 @@ class OrderControllerTest {
     }
 
     @Test
+    @Commit
     void shouldCreateOrder() throws Exception {
         String body = mockMvc.perform(post("/v1/orders")
                         .accept(MediaType.APPLICATION_JSON)
@@ -95,6 +100,48 @@ class OrderControllerTest {
                 .has(new Condition<>(orderItems -> orderItems.stream()
                         .filter(orderItem -> orderItem.getProduct().getId().equals(product2Id))
                         .anyMatch(orderItem -> orderItem.getAmount().equals(new BigDecimal(2))), "has product 2"));
-        ;
+    }
+
+    @Test
+    public void shouldValidateProductExistence() throws Exception {
+        mockMvc.perform(post("/v1/orders")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + jwtRepo.generateToken("user"))
+                .content(String.format("""
+                        {
+                            "items": [
+                                {
+                                    "productId": "%s",
+                                    "amount": 10
+                                }
+                            ]
+                        }
+                        """, UUID.randomUUID()))
+        ).andExpect(status().isBadRequest());
+        assertThat(orderItemRepo.count()).isZero();
+    }
+
+    @Test
+    void shouldValidateInput() throws Exception {
+        for (String body : Arrays.asList(
+                "{}",
+                """
+                        { "items": [] }
+                        """,
+                """
+                        { "items": [ {  } ] }
+                        """,
+                """
+                        { "items": [ { "amount": 0 } ] }
+                        """)) {
+            mockMvc.perform(post("/v1/orders")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Bearer " + jwtRepo.generateToken("user"))
+                    .content(String.format(body, product1Id, product2Id))
+            ).andExpect(status().isBadRequest());
+            assertThat(orderItemRepo.count()).isZero();
+        }
     }
 }

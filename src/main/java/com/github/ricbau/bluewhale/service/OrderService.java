@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,6 +27,10 @@ public class OrderService {
                 .forEach(orderItemInput -> orderItemService.createItemOn(orderItemInput, order));
 
         return order;
+    }
+
+    public Optional<Order> findInDept(UUID id) {
+        return orderRepo.findInDept(id);
     }
 
 }
