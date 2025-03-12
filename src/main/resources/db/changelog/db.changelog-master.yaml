@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1"
+      author: "ribaumann"
+      changes:
+        - createTable:
+            tableName: "test"
+            columns:
+              - column:
+                  name: "id"
+                  type: "uuid"
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: "name"
+                  type: "text"
