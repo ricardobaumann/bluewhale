@@ -95,7 +95,7 @@ API [here](https://www.loom.com/share/7073a5ac225746c68abce7f22ec3f4cf?sid=f7614
 ### Development insights
 
 Stick to best practices, and keep every concern on the right layer. Be
-a [boy scout](https://medium.com/@codechuckle/code-quality-unleashed-boy-scout-principle-6b845e831424, focusing on the
+a [boy scout](https://medium.com/@codechuckle/code-quality-unleashed-boy-scout-principle-6b845e831424), focusing on the
 long term health of this asset.
 Aim for 100% test coverage, including integration and unit tests as required.
 
